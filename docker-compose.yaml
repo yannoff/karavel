@@ -1,0 +1,59 @@
+version: '3.6'
+services:
+    fpm:
+        build:
+            context: https://github.com/yannoff/docker-php-fpm.git#:${PHP_VERSION:-8.0}
+            args:
+                PHP_EXTS: intl
+        env_file: .env
+        user: ${UID:-1000}:${UID:-1000}
+        ports:
+            # FPM Proxy pass
+            - 9000:9000
+            # HTTP serving port
+            - ${HTTP_PORT:-8088}:${HTTP_PORT:-8088}
+        command:
+            - php
+            - -S
+            - 0.0.0.0:${HTTP_PORT:-8088}
+            - -t
+            - public
+        working_dir: ${WORKDIR:-/src}
+        volumes:
+            - ./:${WORKDIR:-/src}
+            - ./laradoc/php/db-health-check:/usr/local/bin/db-health-check
+            - ./laradoc/php/node-helper:/usr/bin/npm
+            - ./laradoc/php/node-helper:/usr/bin/node
+            - ./laradoc/php/node-helper:/usr/bin/yarn
+        networks:
+            - laradoc
+
+    nodeserver:
+        image: yannoff/node-api:12
+        user: ${UID:-1000}:${UID:-1000}
+        ports:
+            # API Listening port
+            - 5000:5000
+        working_dir: ${WORKDIR:-/src}
+        volumes:
+            - ./:${WORKDIR:-/src}
+        networks:
+            - laradoc
+
+    mailer:
+        image: schickling/mailcatcher
+        ports:
+            - ${WEBMAIL_PORT:-1080}:1080
+            - 1025
+        networks:
+            - laradoc
+
+    redis:
+        image: redis:alpine
+        ports:
+            - ${REDIS_PORT:-6379}:6379
+        networks:
+            - laradoc
+
+networks:
+    laradoc: {}

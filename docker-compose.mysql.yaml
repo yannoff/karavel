@@ -1,0 +1,31 @@
+version: '3.6'
+services:
+    fpm:
+        build:
+            args:
+                PHP_EXTS: intl pdo_mysql
+                APK_ADD: mysql-client
+    dbserver:
+        image: mysql:${MYSQL_VERSION:-8.0}
+        ports:
+            - ${MYSQL_PORT:-3306}:${DB_PORT:-3306}
+        environment:
+            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+            MYSQL_DATABASE: ${DB_DATABASE}
+            MYSQL_USER: ${DB_USERNAME}
+            MYSQL_PASSWORD: ${DB_PASSWORD}
+            MYSQL_ALLOW_EMPTY_PASSWORD: yes
+        volumes:
+            - dbdata:/var/lib/mysql
+        networks:
+            - laradoc
+        healthcheck:
+            test:
+                - CMD
+                - mysqladmin
+                - ping
+                - -p${DB_PASSWORD}
+            retries: 3
+            timeout: 5s
+volumes:
+    dbdata: {}

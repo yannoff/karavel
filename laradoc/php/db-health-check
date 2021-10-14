@@ -1,0 +1,66 @@
+#!/usr/bin/env php
+#
+# Database health-check script
+# Loop and retry until the connection succeed
+#
+# Since the script is invoked prior to the composer install command, it
+# has to be ORM-agnostic, and must be able to run standalone. Indeed at
+# the very first launch, the ORM dependencies are not installed yet
+#
+<?php
+
+$env = getenv();
+
+// Gather connection information either from the global DATABASE_URL env var,
+// either from the POSTGRES_* values
+$url = $env['DATABASE_URL'] ?? false;
+
+if ($url) {
+    $data = sscanf($url, '%[^:]://%[^:]:%[^@]@%[^:]:%[^/]/%[^?]?serverVersion=%[^&]&charset=%s');
+} else {
+    // No config can be found, exit to avoid infinite loop
+    if (!array_key_exists('POSTGRES_USER', $env)) {
+        echo "[health-check] No database config found in environment variables. Exiting.\n";
+        exit(0);
+    }
+
+    $data = [
+        $env['DB_CONNECTION'] ?? 'pgsql',
+        $env['DB_USERNAME'] ?? null,
+        $env['DB_PASSWORD'] ?? null,
+        $env['DB_HOST'] ?? 'dbserver',
+        $env['DB_PORT'] ?? '5432',
+        $env['DB_DATABASE'] ?? null,
+        $env['DB_VERSION'] ?? null,
+        $env['DB_CHARSET'] ?? 'utf8',
+    ];
+}
+
+list($driver, $user, $pass, $host, $port, $name, $version, $charset) = $data;
+
+$dsn = sprintf('%s:host=%s;dbname=%s', $driver, $host, $name);
+
+// Database state var: responsible for breaking the loop
+$ready = false;
+
+// Iterations counter
+$i = 0;
+
+// Number of seconds between 2 tries
+$interval = 1;
+
+do {
+    $i++;
+    try {
+        $pdo = new PDO($dsn, $user, $pass);
+        $time = $pdo->query('SELECT CURRENT_TIMESTAMP as t;')->fetch()['t'];
+        echo "[health-check] Database ready at: " . $time . "\n";
+        $ready = true;
+    } catch (PDOException $e) {
+        echo "[health-check] Database not ready yet. Retrying in $interval seconds... ($i)\n";
+        sleep($interval);
+        continue;
+    }
+} while (! $ready);
+
+# vim: syntax=php

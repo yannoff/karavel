@@ -1,0 +1,33 @@
+version: '3.6'
+services:
+    fpm:
+        build:
+            args:
+                PHP_EXTS: intl pdo_pgsql
+                APK_ADD: postgresql-client
+        healthcheck:
+            test:
+                - CMD-SHELL
+                - db-health-check
+
+    dbserver:
+        image: postgres:${PG_VERSION:-9.6}
+        env_file: .env
+        ports:
+            - ${PG_PORT:-5432}:${DB_PORT:-432}
+        working_dir: /src
+        volumes:
+            - ./:/src
+            - dbdata:/var/lib/postgresql/data
+            - laradoc/php/pgsql/initdb.d:/docker-entrypoint-initdb.d
+        environment:
+            PGTZ: ${TZ:-Europe/Paris}
+            POSTGRES_VERSION: ${PG_VERSION:-9.6}
+            POSTGRES_USER: ${DB_USERNAME:-laravel}
+            POSTGRES_DB: ${DB_DATABASE:-laravel}
+            POSTGRES_CHARSET: utf8
+            POSTGRES_PASSWORD: ${DB_PASSWORD:-root}
+        networks:
+            - laradoc
+volumes:
+    dbdata: {}

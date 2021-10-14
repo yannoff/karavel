@@ -1,0 +1,4 @@
+.git*           export-ignore
+index-env-vars  export-ignore
+install.sh      export-ignore
+README.md       export-ignore

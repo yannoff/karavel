@@ -1,0 +1,23 @@
+#!/bin/bash
+
+v=${1:-env}
+
+for f in docker-compose.yaml docker-compose.mysql.yaml docker-compose.postgres.yaml
+do
+    echo "#### $f"
+    echo
+    if [ "${v}" = "readme" ]
+    then
+        echo "Name|Default|Description"
+        echo "---|---|---"
+    fi
+    grep -o '\${[A-Z_]\+:-.*}' $f | awk -v "version=$v" -F ":-" '{
+        gsub("^\${", "", $1);
+        gsub("}", "", $2);
+        if (version == "env")
+            printf "%s=%s\n", $1, $2;
+        else
+            printf "`%s`|%s|\n", $1, $2;
+    }' | sort
+    echo
+done
