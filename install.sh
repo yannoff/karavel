@@ -3,7 +3,7 @@
 # Laradoc remote install script
 #
 
-zipball=/tmp/laradoc.zip
+tarball=/tmp/laradoc.tbz2
 
 # Check that curl is installed, exit if not present
 if [ ! command -v curl ]
@@ -20,11 +20,11 @@ then
 fi
 
 # Download latest respository archive
-curl -L -o ${zipball} https://github.com/yannoff/laradoc/archive/refs/heads/main.zip && \
+curl -L -o ${tarball} https://github.com/yannoff/laradoc/releases/latest/download/laradoc.tbz2 && \
 # Extract the files to the current dir
-unzip ${zipball} && \
+tar -xjf ${tarball} && \
 # Cleanup
-rm ${zipball}
+rm ${tarball}
 
 # Source the current project .env file
 source .env
