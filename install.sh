@@ -6,7 +6,7 @@
 tarball=/tmp/laradoc.tbz2
 
 # Check that curl is installed, exit if not present
-if [ ! command -v curl ]
+if ! command -v curl 2>/dev/null 1>&2
 then
     echo "This install script needs curl to be installed. Exiting."
     exit 1
