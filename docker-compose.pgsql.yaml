@@ -18,7 +18,7 @@ services:
         working_dir: /src
         volumes:
             - ./:/src
-            - dbdata:/var/lib/postgresql/data
+            - pgdata:/var/lib/postgresql/data
             - laradoc/php/pgsql/initdb.d:/docker-entrypoint-initdb.d
         environment:
             PGTZ: ${TZ:-Europe/Paris}
@@ -30,4 +30,4 @@ services:
         networks:
             - laradoc
 volumes:
-    dbdata: {}
+    pgdata: {}

@@ -16,7 +16,7 @@ services:
             MYSQL_PASSWORD: ${DB_PASSWORD}
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - dbdata:/var/lib/mysql
+            - mydata:/var/lib/mysql
         networks:
             - laradoc
         healthcheck:
@@ -28,4 +28,4 @@ services:
             retries: 3
             timeout: 5s
 volumes:
-    dbdata: {}
+    mydata: {}
