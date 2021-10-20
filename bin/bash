@@ -1,0 +1,5 @@
+#!/bin/bash
+
+[ "$#" -eq "0" ] && set -- bash
+
+docker-compose exec fpm "${@}"
