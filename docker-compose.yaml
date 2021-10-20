@@ -1,4 +1,8 @@
 version: '3.6'
+
+networks:
+    laradoc: {}
+
 services:
     fpm:
         build:
@@ -54,6 +58,3 @@ services:
             - ${REDIS_PORT:-6379}:6379
         networks:
             - laradoc
-
-networks:
-    laradoc: {}

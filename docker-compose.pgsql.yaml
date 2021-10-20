@@ -1,4 +1,8 @@
 version: '3.6'
+
+volumes:
+    pgdata: {}
+
 services:
     fpm:
         build:
@@ -29,5 +33,3 @@ services:
             POSTGRES_PASSWORD: ${DB_PASSWORD:-root}
         networks:
             - laradoc
-volumes:
-    pgdata: {}

@@ -1,4 +1,8 @@
 version: '3.6'
+
+volumes:
+    mydata: {}
+
 services:
     fpm:
         build:
@@ -27,5 +31,3 @@ services:
                 - -p${DB_PASSWORD}
             retries: 3
             timeout: 5s
-volumes:
-    mydata: {}
