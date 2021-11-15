@@ -23,7 +23,7 @@ services:
         volumes:
             - ./:/src
             - pgdata:/var/lib/postgresql/data
-            - laradoc/php/pgsql/initdb.d:/docker-entrypoint-initdb.d
+            - ./laradoc/pgsql/initdb.d:/docker-entrypoint-initdb.d
         environment:
             PGTZ: ${TZ:-Europe/Paris}
             POSTGRES_VERSION: ${PG_VERSION:-9.6}
