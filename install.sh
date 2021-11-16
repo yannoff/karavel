@@ -36,7 +36,7 @@ fi
 # Check there is a .env file
 if [ ! -f .env  ]
 then
-    echo "There is no .env file.\nPlease provide one, for instance using the sample file:\ncp .env.example .env"
+    echo -e "There is no .env file.\nPlease provide one, for instance using the sample file:\ncp .env.example .env"
     exit 1
 fi
 
