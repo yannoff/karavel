@@ -84,4 +84,9 @@ do
     _exe sed -i "s/^${regexp}=.*$/${var}/g" .env
 done
 
+# Fix original .gitignore (laravel assumes .yml extension) for docker-compose override
+echo "Adding docker-compose.override.yaml to git ignored files..."
+echo /docker-compose.override.yaml >> .gitignore
+
+
 echo "Laradoc assets install completed."
