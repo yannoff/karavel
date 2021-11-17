@@ -8,7 +8,7 @@ services:
         build:
             args:
                 PHP_EXTS: intl pdo_mysql
-                APK_ADD: mariadb-connector-c mysql-client
+                APK_EXTRA: mariadb-connector-c mysql-client
     dbserver:
         image: mysql:${MYSQL_VERSION:-8.0}
         ports:
