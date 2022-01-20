@@ -18,7 +18,7 @@ services:
         image: postgres:${PG_VERSION:-9.6}-alpine
         env_file: .env
         ports:
-            - ${PG_PORT:-5432}:${DB_PORT:-432}
+            - ${PG_PORT:-5432}:${DB_PORT:-5432}
         working_dir: /src
         volumes:
             - ./:/src
