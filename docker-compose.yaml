@@ -58,3 +58,10 @@ services:
             - ${REDIS_PORT:-6379}:6379
         networks:
             - karavel
+
+    memcached:
+        image: memcached:alpine
+        ports:
+            - ${MEMCACHED_PORT:-11211}:11211
+        networks:
+            - karavel

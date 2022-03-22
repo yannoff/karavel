@@ -9,6 +9,7 @@ The stack provides the following services:
 - [node api](https://github.com/yannoff/docker-node-api)
 - [redis](https://github.com/docker-library/redis)
 - [mailcatcher](https://github.com/schickling/dockerfiles/tree/master/mailcatcher)
+- [memcached](https://github.com/docker-library/memcached)
 
 ## Pre-requisites
 
@@ -57,6 +58,7 @@ Name|Value
 `DB_HOST`|dbserver
 `REDIS_HOST`|redis
 `MAILER_HOST`|mailer
+`MEMCACHED_HOST`|memcached
 
 
 _Addtionally, the following environment variables may be added/modified in the project's `.env` file for a more fine-tuned stack._
@@ -72,6 +74,7 @@ Name|Description|Fallback value
 `PHP_VERSION`|PHP Version to use for the `fpm` container|8.0
 `WORKDIR`| Working directory for the `fpm` & `node` containers|/src
 `TZ`|The application timezone|Europe/Paris|
+`MEMCACHED_PORT`|The port exposed by the `memcached` service on the host machine|11211
 
 **MySQL specific variables**
 

@@ -76,7 +76,7 @@ _clr
 
 # Customize servive env var parameters
 echo "Customizing services config in .env file..."
-vars=( DB_HOST=dbserver REDIS_HOST=redis MAIL_HOST=mailer )
+vars=( DB_HOST=dbserver REDIS_HOST=redis MAIL_HOST=mailer MEMCACHED_HOST=memcached )
 for var in "${vars[@]}"
 do
     _grey && echo "${var}" && _clr
