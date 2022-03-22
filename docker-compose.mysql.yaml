@@ -22,7 +22,7 @@ services:
         volumes:
             - mydata:/var/lib/mysql
         networks:
-            - laradoc
+            - karavel
         healthcheck:
             test:
                 - CMD

@@ -1,7 +1,7 @@
 version: '3.6'
 
 networks:
-    laradoc: {}
+    karavel: {}
 
 services:
     fpm:
@@ -25,12 +25,12 @@ services:
         working_dir: ${WORKDIR:-/src}
         volumes:
             - ./:${WORKDIR:-/src}
-            - ./laradoc/php/db-health-check:/usr/local/bin/db-health-check
-            - ./laradoc/php/node-helper:/usr/bin/npm
-            - ./laradoc/php/node-helper:/usr/bin/node
-            - ./laradoc/php/node-helper:/usr/bin/yarn
+            - ./karavel/php/db-health-check:/usr/local/bin/db-health-check
+            - ./karavel/php/node-helper:/usr/bin/npm
+            - ./karavel/php/node-helper:/usr/bin/node
+            - ./karavel/php/node-helper:/usr/bin/yarn
         networks:
-            - laradoc
+            - karavel
 
     nodeserver:
         image: yannoff/node-api:12
@@ -42,7 +42,7 @@ services:
         volumes:
             - ./:${WORKDIR:-/src}
         networks:
-            - laradoc
+            - karavel
 
     mailer:
         image: schickling/mailcatcher
@@ -50,11 +50,11 @@ services:
             - ${WEBMAIL_PORT:-1080}:1080
             - 1025
         networks:
-            - laradoc
+            - karavel
 
     redis:
         image: redis:alpine
         ports:
             - ${REDIS_PORT:-6379}:6379
         networks:
-            - laradoc
+            - karavel

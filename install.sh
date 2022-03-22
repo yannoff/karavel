@@ -1,9 +1,9 @@
 #!/bin/bash
 #
-# Laradoc remote install script
+# Karavel remote install script
 #
 
-tarball=/tmp/laradoc.tbz2
+tarball=/tmp/karavel.tbz2
 
 _grey(){
     echo -ne "\033[01;30m"
@@ -41,11 +41,11 @@ then
 fi
 
 # Download latest respository archive
-echo "Downloading laradoc latest tarball..."
-_exe curl -L -o ${tarball} https://github.com/yannoff/laradoc/releases/latest/download/laradoc.tbz2
+echo "Downloading karavel latest tarball..."
+_exe curl -L -o ${tarball} https://github.com/yannoff/karavel/releases/latest/download/karavel.tbz2
 
 # Extract the files to the current dir
-echo "Extracting laradoc assets from tarball..."
+echo "Extracting karavel assets from tarball..."
 _exe tar -xvjf ${tarball}
 
 # Cleanup
@@ -89,4 +89,4 @@ echo "Adding docker-compose.override.yaml to git ignored files..."
 echo /docker-compose.override.yaml >> .gitignore
 
 
-echo "Laradoc assets install completed."
+echo "Karavel assets install completed."
