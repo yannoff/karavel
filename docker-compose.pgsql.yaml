@@ -23,7 +23,7 @@ services:
         volumes:
             - ./:/src
             - pgdata:/var/lib/postgresql/data
-            - ./laradoc/pgsql/initdb.d:/docker-entrypoint-initdb.d
+            - ./karavel/pgsql/initdb.d:/docker-entrypoint-initdb.d
         environment:
             PGTZ: ${TZ:-Europe/Paris}
             POSTGRES_VERSION: ${PG_VERSION:-9.6}
@@ -32,4 +32,4 @@ services:
             POSTGRES_CHARSET: utf8
             POSTGRES_PASSWORD: ${DB_PASSWORD:-root}
         networks:
-            - laradoc
+            - karavel

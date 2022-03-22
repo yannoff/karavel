@@ -1,4 +1,4 @@
-# laradoc
+# karavel
 
 An alternative docker stack to [laravel-sail](https://github.com/laravel/sail).
 
@@ -35,13 +35,13 @@ composer create-project laravel/laravel acme
 docker run --rm -it -u $UID:$UID -w /src -v $PWD:/src yannoff/php-fpm:8.0 composer create-project laravel/laravel acme
 ```
 
-### 2. Install laradoc stack
+### 2. Install karavel stack
 
 Call the remote install script on-the-fly, from the project's top-level dir:
 
 ```bash
 cd acme
-curl -L https://github.com/yannoff/laradoc/releases/latest/download/install.sh | bash
+curl -L https://github.com/yannoff/karavel/releases/latest/download/install.sh | bash
 ```
 
 > :bulb: *The install script will use the `DB_CONNECTION` env var to determine which db driver config must be used.*
@@ -96,7 +96,7 @@ docker-compose up -d
 
 ## About the name
 
-Laradoc is a nod to the [Kaamelott](https://en.wikipedia.org/wiki/Kaamelott) french popular soap opera's famous character [Karadoc](https://en.wikipedia.org/wiki/Caradoc). :smiley_cat:
+Karavel is a nod to the [Kaamelott](https://en.wikipedia.org/wiki/Kaamelott) french popular soap opera's famous character [Karadoc](https://en.wikipedia.org/wiki/Caradoc). :smiley_cat:
 
 ## License
 
